@@ -12,13 +12,13 @@ public class ImageLoader {
 	
 	private String path;
 	private static BufferedImage image;
-	private boolean hasAlpha = false;
+	//private boolean hasAlpha = false;
 	
 	public ImageLoader(String path) {
 		this.path = path;
 		try {
 			image = ImageIO.read(new File(this.path));
-			if(image.getAlphaRaster()!=null) this.hasAlpha = true;
+			//if(image.getAlphaRaster()!=null) this.hasAlpha = true;
 		} catch (IOException e) {
 			throw new Error(e);
 		}
@@ -27,7 +27,7 @@ public class ImageLoader {
 	public ImageLoader(File file) {
 		try {
 			image = ImageIO.read(file);
-			if(image.getAlphaRaster()!=null) this.hasAlpha = true;
+			//if(image.getAlphaRaster()!=null) this.hasAlpha = true;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
