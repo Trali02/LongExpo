@@ -1,42 +1,63 @@
 package ImageProcessing;
 
+import java.awt.FileDialog;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jcodec.api.FrameGrab;
-import org.jcodec.api.JCodecException;
-import org.jcodec.common.io.NIOUtils;
-import org.jcodec.common.model.Picture;
-
-
-
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.FrameGrabber.Exception;
+import org.bytedeco.javacv.Java2DFrameConverter;
 
 public class VideoLoader {
 	
-	List<BufferedImage> frames;
+	List<Frame> frames;
 	File video;
-	public VideoLoader(File file) {
-		if(file == null) throw new Error("Missing File!");
-		frames = new ArrayList<BufferedImage>();
-		setVideo(file);
+	public VideoLoader() {
+		
+		frames = new ArrayList<Frame>();
+		
+		FileDialog dialog1 = new FileDialog(new java.awt.Frame(),"Select video");
+		dialog1.setMode(FileDialog.LOAD);
+		dialog1.setMultipleMode(false);
+	    dialog1.setVisible(true);
+	    
+		if(dialog1.getFiles()[0] == null) throw new Error("Missing File!");
+		
+		setVideo(dialog1.getFiles()[0]);
 	}
 	
 	public void setVideo(File video) {
 		
 		this.video = video;
+		FFmpegFrameGrabber f = new FFmpegFrameGrabber(video);
+		
+		
 		
 		try {
-			FrameGrab grab = FrameGrab.createFrameGrab(NIOUtils.readableChannel(video));
-			Picture p;
-			p = grab.getNativeFrame();
-			frames.add(bridge.AWTUtil.toBufferedImage(p));
-		} catch (IOException | JCodecException e) {
-			// TODO Auto-generated catch block
+			f.start();
+			if(f.getFrameNumber()<60) {
+				for(int i=0;i<f.getFrameNumber();i++) {
+				
+					frames.add(null);
+				}
+			
+			} else {
+				for(int i=0;i<60;i++) {
+					frames.add(null);
+				}
+			}
+		
+			f.stop();
+			f.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 		
 		
 	}
@@ -44,7 +65,7 @@ public class VideoLoader {
 	public BufferedImage[] getImages() {
 		BufferedImage[] x = new BufferedImage[frames.size()];
 		for(int i=0;i<frames.size();i++) {
-			x[i] = frames.remove(0);
+			x[i] = new Java2DFrameConverter().getBufferedImage(frames.remove(0));
 		}
 		return x;
 	}

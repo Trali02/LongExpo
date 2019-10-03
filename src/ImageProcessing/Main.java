@@ -10,21 +10,15 @@ import javax.imageio.ImageIO;
 
 public class Main {
 
-	private static ImageLoader loader;
+	//private static ImageLoader loader;
+	private static VideoLoader loader;
 	private static BufferedImage[] images;
 	
 	public static void main(String[] args) {
-		/*
-		FileDialog dialog1 = new FileDialog(new Frame(),"Select video");
-		dialog1.setMode(FileDialog.LOAD);
-		dialog1.setMultipleMode(false);
-	    dialog1.setVisible(true);
-	    
-	    System.out.println(dialog1.getDirectory()+dialog1.getFile());
-	     
-	    loader = new VideoLoader(dialog1.getFiles()[0]);
-	    */
-		loader = new ImageLoader();
+		
+		//loader = new ImageLoader();
+		
+		loader = new VideoLoader();
 		
 	    images = loader.getImages();
 	    

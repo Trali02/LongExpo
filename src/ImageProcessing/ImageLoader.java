@@ -17,7 +17,7 @@ public class ImageLoader {
 	
 	public ImageLoader() {
 		try {
-			FileDialog dialog1 = new FileDialog(new Frame(),"Select video");
+			FileDialog dialog1 = new FileDialog(new Frame(),"Select Image Sequence");
 			dialog1.setMode(FileDialog.LOAD);
 			dialog1.setMultipleMode(true);
 		    dialog1.setVisible(true);

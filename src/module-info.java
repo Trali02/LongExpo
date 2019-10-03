@@ -1,4 +1,4 @@
 module LongExpo {
 	requires java.desktop;
-	requires jcodec;
+	requires org.bytedeco.javacv;
 }
